@@ -10,7 +10,7 @@ let filteredNames = userNames.filter(name => {
     return letters.includes(firstLetter); // [ 'Емма', 'Юстин', 'Ілля', 'Яна', 'Антон', 'Олена' ]
 });
 
-console.log(filteredNames) // [ 'Емма', 'Юстин', 'Ілля', 'Яна', 'Антон', 'Олена' ]
+console.log(filteredNames); // [ 'Емма', 'Юстин', 'Ілля', 'Яна', 'Антон', 'Олена' ]
 
 
 
