@@ -1,5 +1,5 @@
 //Задача 1
-/* 
+
     function durationBetweenDates(startDate, endDate, dimention) {
     const firstDate = new Date (startDate);
     const SecondDate = new Date (endDate);
@@ -23,11 +23,11 @@
     }
 }
 
-console.log(durationBetweenDates('05 Oct 2023', '05 Oct 1994', 'days'));  */
+console.log(durationBetweenDates('05 Oct 2023', '05 Oct 1994', 'days')); 
 
 //Задача 2
 
-/* const priceData = {
+const priceData = {
     Apples: '23.4',
     BANANAS: '48',
     oRAnGEs: '48.7584',
@@ -45,12 +45,12 @@ console.log(durationBetweenDates('05 Oct 2023', '05 Oct 1994', 'days'));  */
   
     let updatedPriceData = optimizer(priceData);
     
-    console.log(updatedPriceData) // {apples: '23.40', bananas: '48.00', oranges: '48.76'} */
+    console.log(updatedPriceData) // {apples: '23.40', bananas: '48.00', oranges: '48.76'}
 
 
         //Задача 4
 
-/*         function iterativeOddSumTo(number) {
+        function iterativeOddSumTo(number) {
 
             let sum = 0;
             for (let i = 0; i <= number; i++) {
@@ -61,10 +61,9 @@ console.log(durationBetweenDates('05 Oct 2023', '05 Oct 1994', 'days'));  */
         };
             
             console.log(iterativeOddSumTo(1)) // 1
-            console.log(iterativeOddSumTo(10)) // 25 */
+            console.log(iterativeOddSumTo(10)) // 25
 
-                //Задача 3
-
+        //Задача 3
 
     function  recursiveOddSumTo(number) {
         
