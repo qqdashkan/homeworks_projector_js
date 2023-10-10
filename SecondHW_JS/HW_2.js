@@ -4,26 +4,27 @@
     const firstDate = new Date (startDate);
     const SecondDate = new Date (endDate);
 
-    const duration = Math.abs(SecondDate.getTime() - firstDate.getTime())
+    const duration = (Math.abs(SecondDate.getTime() - firstDate.getTime()))/1000;
 
-    if (dimention === 'seconds') {
-        return (duration/1000) + ' seconds';
-    }
-    if (dimention === 'days') {
-        return Math.floor(duration/1000/60/60/24) + ' days';
-    }
-    if (dimention === 'hours') {
-        return (duration/1000/60/60) + ' hours';
-    }
-    if (dimention === 'minutes') {
-        return (duration/1000/60) + ' minutes';
-    }
-    else {
-        return 'Помилка. Спробуйте ще';
+    switch(dimention) {
+        case 'seconds': 
+            console.log(duration + ' seconds'); 
+            break;
+        case 'days':
+            console.log(Math.floor(duration/60/60/24) + ' days');
+            break;
+        case 'hours':
+            console.log((duration/60/60) + ' hours');
+            break;
+        case 'minutes': 
+            console.log((duration/60) + ' minutes');
+            break;
+        default:
+            console.log('Помилка. Спробуйте ще');
     }
 }
 
-console.log(durationBetweenDates('05 Oct 2023', '05 Oct 1994', 'days')); 
+durationBetweenDates('05 Oct 2023', '05 Oct 1994', 'days'); 
 
 //Задача 2
 
@@ -75,9 +76,10 @@ const priceData = {
         return number + recursiveOddSumTo (number - 1);
         }
 
-        else return recursiveOddSumTo (number - 1);
+        return recursiveOddSumTo (number - 1);
       
     }
 
         console.log(recursiveOddSumTo(1)) // 1
         console.log(recursiveOddSumTo(10)) // 25 
+        
