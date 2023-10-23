@@ -84,7 +84,7 @@ return function (a, b) {
 const userNames = ['Петро', 'Емма', 'Петро', 'Емма', 'Марта', 'Яна', 'Василь', 'Антон', 'Олена', 'Емма'];
 
 function filterUnique(array) {
-return Array.from([...new Set(userNames)]);
+return [...new Set(userNames)];
 }
 
 console.log(filterUnique(userNames)); // ['Петро', 'Емма', 'Марта', 'Яна', 'Василь', 'Антон', 'Олена'];
