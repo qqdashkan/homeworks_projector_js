@@ -1,6 +1,6 @@
 // Задача 1
 
-/* detonatorTimer(3);
+ detonatorTimer(3);
 // 3
 // 2
 // 1
@@ -18,12 +18,12 @@ function detonatorTimer(delay){
 
     }, 1000);
 
-}  */
+}  
 
 
 //Задача 2
 
-/* detonatorTimer(3);
+ detonatorTimer(3);
 // 3
 // 2
 // 1
@@ -39,11 +39,11 @@ function detonatorTimer(delay) {
         detonatorTimer(delay-1);
     }, 1000);
 
-} */
+} 
 
 //Задача 3
 
-/* let myCat = {
+ let myCat = {
     name: "Malibu",
     breed: "British Shorthair",
     yearOfBorn: 2018,
@@ -74,21 +74,21 @@ function detonatorTimer(delay) {
 
 myCat.introduce();
 myCat.description();
-myCat.getHomeAdress(); */
+myCat.getHomeAdress(); 
 
 //Задача 4
 
-/* let securedCatIntroduce = myCat.introduce.bind(myCat);
+let securedCatIntroduce = myCat.introduce.bind(myCat);
 let securedCatDescription = myCat.description.bind(myCat);
 let securedCatAdress = myCat.getHomeAdress.bind(myCat);
 
 setTimeout(securedCatIntroduce, 1000);
 setTimeout(securedCatDescription, 2000);
-setTimeout(securedCatAdress, 3000); */
+setTimeout(securedCatAdress, 3000); 
 
 //Задача 5
 
-/* function someFunction (a, b){
+function someFunction (a, b){
 	return a * b;
 }
 
@@ -103,5 +103,5 @@ function slower(func, seconds) {
 
 let slowedSomeFunction = slower(someFunction, 5); 
 
-slowedSomeFunction(5, 3)  */
+slowedSomeFunction(5, 3) 
 
