@@ -13,7 +13,8 @@ function detonatorTimer(delay){
         delay--;
         if (delay === 0){
             clearInterval(stopTimer);
-            console.log("BOOM!");
+            setTimeout(() => { 
+                console.log("BOOM!")}, 1000);
         }
 
     }, 1000);
@@ -23,23 +24,25 @@ function detonatorTimer(delay){
 
 //Задача 2
 
- detonatorTimer(3);
+ detonatorTimer(5);
 // 3
 // 2
 // 1
 // BOOM!
 
 function detonatorTimer(delay) {
-    if (delay === 0){
-        return console.log("BOOM!");
-    }
-
-    setTimeout(() => {
+    setTimeout(function tick() {
         console.log(delay);
-        detonatorTimer(delay-1);
-    }, 1000);
+        delay--;
+        if (delay === 0){
+            return setTimeout(() => { 
+            console.log("BOOM!")}, 1000);
+        }
+        setTimeout(tick, 1000);
+      }, 1000);
 
-} 
+}
+
 
 //Задача 3
 
@@ -74,7 +77,7 @@ function detonatorTimer(delay) {
 
 myCat.introduce();
 myCat.description();
-myCat.getHomeAdress(); 
+myCat.getHomeAdress();  */
 
 //Задача 4
 
@@ -88,20 +91,24 @@ setTimeout(securedCatAdress, 3000);
 
 //Задача 5
 
-function someFunction (a, b){
-	return a * b;
+function someFunction (...args){
+    let result = 0;
+    for(let item of args) {
+        result += item; 
+    }
+    return result;
 }
 
 function slower(func, seconds) {
     console.log("Chill out, you will get you result in 5 seconds")
-    return function (a, b) {
+    return function (...args) {
         setTimeout(() =>{
-            return console.log("Your result is", func(a, b))
+            return console.log("Your result is", func(...args))
         }, seconds * 1000)
     }
 }
 
 let slowedSomeFunction = slower(someFunction, 5); 
 
-slowedSomeFunction(5, 3) 
+slowedSomeFunction(5, 4, 15) 
 
