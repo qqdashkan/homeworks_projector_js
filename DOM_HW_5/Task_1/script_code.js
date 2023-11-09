@@ -6,9 +6,6 @@ const hatredLevelBlock = document.body.getElementsByClassName('hatredLevelBlock'
 const firstSection = document.querySelector('.firstSection');
 const getComment = firstSection.nextSibling;
 
-console.log(firstSection);
-console.log(getComment);
-
 const paragraphs = document.querySelectorAll('li');
 const paragraphFive = paragraphs[4];
 
