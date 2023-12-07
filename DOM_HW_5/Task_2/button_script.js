@@ -39,15 +39,18 @@ button.addEventListener('click', function () {
 });
 
     document.addEventListener("DOMContentLoaded", function () {
+
+    let btn = document.querySelector('.btn').innerHTML;
+    btn.innerHTML = btn;
  
-     let currentBackGround = localStorage.getItem('currentColor');
-     document.body.className = currentBackGround;
+    let currentBackGround = localStorage.getItem('currentColor');
+    document.body.className = currentBackGround;
 
-     let currentButton = localStorage.getItem('currentBtn');
-     button.innerHTML = currentButton;
+    let currentButton = localStorage.getItem('currentBtn');
+    button.innerHTML = currentButton;
 
-     let lastStatus = localStorage.getItem('currentStatus');
-     elem.innerHTML = lastStatus;
+    let lastStatus = localStorage.getItem('currentStatus');
+    elem.innerHTML = lastStatus;
 
 }); 
 
