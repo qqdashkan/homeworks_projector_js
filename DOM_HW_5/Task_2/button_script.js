@@ -1,55 +1,65 @@
 'use strict';
 
-const button = document.querySelector('.container');
-const btn = document.querySelector('.btn');
+const button = document.querySelector('.btn');
+const body = document.body;
 
-const newElement = document.createElement('div');
-button.appendChild(newElement);
-    newElement.style.fontFamily = "Helvetica";
-    newElement.style.position = "absolute";
-    newElement.style.top = "65%";
-    newElement.style.left = "40%";
-    newElement.style.transform = "translate (-50%, -50%)";
-    newElement.style.padding = "10px";
+const elem = document.createElement('div');
+body.appendChild(elem);
+elem.classList.add('style-text');
 
 
-function showLastTimeOff() {
-    let nowOff = new Date().toISOString().slice(0,19).split('T').join(' ');
-    
-    localStorage.setItem('lastTurnOff', nowOff);
-    let lastTurnOn = localStorage.getItem('lastTurnOn');
-    newElement.innerHTML = `Last turn on: ${lastTurnOn}`;
-    
-}
 
-function showLastTimeOn() {
-    let nowOn = new Date().toISOString().slice(0,19).split('T').join(' ');
- 
-    localStorage.setItem('lastTurnOn', nowOn);
-    let lastTurnOff = localStorage.getItem('lastTurnOff');
-    newElement.innerHTML = `Last turn off: ${lastTurnOff}`;
+function showLastTimeChange() {
+    let time = new Date().toISOString().slice(0,19).split('T').join(' ');
+    localStorage.setItem('lastTimeChange', time);
 
+    let lastChange = localStorage.getItem('lastTimeChange');
 
-}
+    if (body.classList.contains('dark-color-background')) {
+        //body.classList.remove('light-color-background');
+        button.innerHTML = 'Turn On';
+        elem.innerHTML = `Last turn off: ${lastChange}`;
 
-button.addEventListener("click", function (event) {
-    if (event.target.closest('.btn')) {
-        if (btn.innerText === 'Turn Off') {
-        document.body.style.backgroundColor = 'darkred';
-        newElement.style.color = "white";
-        btn.innerText = 'Turn On';
-        showLastTimeOn();
-        
+    } 
+    else {
+        //body.classList.remove('dark-color-background');
+        button.innerHTML = 'Turn Off';
+        elem.innerHTML = `Last turn on: ${lastChange}`;
 
-}       else {
-        document.body.style.backgroundColor = 'white';
-        newElement.style.color = "black";
-        btn.innerText = 'Turn Off';
-        showLastTimeOff();
-        
-        }
     }
+
+    localStorage.setItem('currentBtn', button.innerHTML); 
+    localStorage.setItem('currentStatus', elem.innerHTML); 
+    localStorage.setItem('currentColor', body.className); 
+}
+
+
+button.addEventListener('click', function () {
+    body.classList.toggle('dark-color-background');
+    //body.classList.toggle('light-color-background');
+
+    showLastTimeChange();
+
 });
+
+    document.addEventListener("DOMContentLoaded", function () {
+ 
+     let currentBackGround = localStorage.getItem('currentColor');
+     body.className = currentBackGround;
+
+     let currentButton = localStorage.getItem('currentBtn');
+     button.innerHTML = currentButton;
+
+     let lastStatus = localStorage.getItem('currentStatus');
+     elem.innerHTML = lastStatus;
+
+
+
+
+
+}); 
+
+
 
 
 
