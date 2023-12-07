@@ -40,9 +40,6 @@ button.addEventListener('click', function () {
 
     document.addEventListener("DOMContentLoaded", function () {
 
-    let btn = document.querySelector('.btn').innerHTML;
-    btn.innerHTML = btn;
- 
     let currentBackGround = localStorage.getItem('currentColor');
     document.body.className = currentBackGround;
 
