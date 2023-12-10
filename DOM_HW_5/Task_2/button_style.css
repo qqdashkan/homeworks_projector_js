@@ -3,7 +3,9 @@
   background-color: darkred;
 }
 
-
+.white-color-background {
+  background-color: white;
+}
 
 .btn{
   display: flex;
