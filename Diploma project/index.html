@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="index.css" rel="stylesheet" type="text/css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+    <div class="first">
+        <h2>First date</h2>
+      </div>
+      <div class="firstDate">
+      
+      <form>
+        <div class="first">
+          <label for="firstDate">Початкова дата </label>
+          <input type="date" name="firstdate" class="data1-input"/>
+          </div>
+      </form>
+      </div>
+      
+      <div class="container">
+      <div class="second">
+        <h2>Second date</h2>
+      </div>
+      
+      <form>
+        <div class="second">
+        <label for="secondDate">Кінцева дата: </label>
+        <input type="date" name="seconddate" class="data2-input"/>
+      </form>
+      </div>
+    </div>
+    <div class="box-period">
+      <form>
+          <label>
+            <input type="radio" class="week" name="period" value="week">
+            Обрати тиждень
+          </label>
+          <br>
+          <label>
+            <input type="radio" class="month" name="period" value="month">
+            Обрати місяць
+          </label>
+        </form>
+    </div>
+
+    <div class="box-days">
+    <form >
+    <div>
+            <label>
+              <input type="radio" class="all-days" name="type-of-days" value="full">
+              Обрати всі дні
+            </label>
+    </div>
+    <div>
+            <label>
+              <input type="radio" class="days-on" name="type-of-days" value="days-on">
+              Обрати тільки будні
+            </label>
+    </div>
+    <div>
+            <label>
+              <input type="radio" class="days-off" name="type-of-days" value="days-off">
+              Обрати тільки вихідні
+            </label>
+    </div>
+  </form>
+</div>
+
+<div class="box-time">
+<form >
+    <div>
+            <label>
+              <input type="radio" class="days" name="result" value="days">
+              Порахувати кількість днів
+            </label>
+    </div>
+    <div>
+            <label>
+              <input type="radio" class="hours" name="result" value="hours">
+              Порахувати кількість годин
+            </label>
+    </div>
+    <div>
+            <label>
+              <input type="radio" class="minutes" name="result" value="minutes">
+              Порахувати кількість хвилин 
+            </label>
+    </div>
+    <div>
+            <label>
+              <input type="radio" class="seconds" name="result" value="seconds">
+              Порахувати кількість секунд
+            </label>
+    </div>
+</form>
+</div>
+
+<div class="button">
+    <button type="submit" class="btn">Get result</button><br>
+    <span id="result"></span> 
+</div>
+<div class="history">
+    <h2>History</h2>
+    <div class="table">
+        <table>
+            <tbody>
+            <tr>
+                <th scope="col">Date 1</th>
+                <th scope="col">Date 2</th>
+                <th scope="col">Result</th>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
+</body>
+<script src="index.js"></script>
+</html>
