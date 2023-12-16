@@ -14,118 +14,69 @@ const radioHours = document.querySelector('.hours');
 const radioMinutes = document.querySelector('.minutes');
 const radioSeconds = document.querySelector('.seconds');
 
-let table = document.querySelector('.table');
+const history = document.querySelector('.history');
+const list = document.createElement('ol');
 
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    const secondDate = document.querySelector('.data2-input');
-
-
     setDefaultSettingsDate();
 
-    if(JSON.parse(localStorage.getItem('date2'))) {
-        let second = JSON.parse(localStorage.getItem('date2'))
-        secondDate.setAttribute('value', second[second.length - 1]);
-    };
+    renderHistory();
 
-    if(JSON.parse(localStorage.getItem('resultsArray'))) {
-        const firstDateArr = JSON.parse(localStorage.getItem('date1'));
-        const secondDateArr = JSON.parse(localStorage.getItem('date2'));
-        const result = JSON.parse(localStorage.getItem('resultsArray'));
-        setHistory(firstDateArr.forEach(el, index => { el[index++] }), 
-            secondDateArr.forEach(el, index => { el[index++] }), 
-            result.forEach(el, index => { el[index++] }));
-        };
-    });
+});
 
 
 button.addEventListener('click', function () {
 
-    let first = new Date(firstDate.value).toISOString().slice(0,10);
-    let second = new Date(secondDate.value).toISOString().slice(0,10);
-
     const result = getResult();
     document.getElementById("result").innerHTML = result;
 
-    storeHistoryInLocalStorage(result, first, second);
+    storeResultInLocalStorage(result);
 
-    setHistory(first, second, result);
+    setHistory(result);
 
-    removeHistory();
-
+    renderHistory();
 });
 
-function storeHistoryInLocalStorage(result, first, second) {
+function renderHistory() {
+
+    let historyList = document.getElementsByTagName('li');
+    console.log(historyList);
+
+
+}
+
+function storeResultInLocalStorage(result) {
 
     let resArray = JSON.parse(localStorage.getItem('resultsArray')) || [];
     resArray.push(JSON.parse(result));
     localStorage.setItem('resultsArray', JSON.stringify(resArray));
 
-
-    if(firstDate.value) {
-        let date_1 = JSON.parse(localStorage.getItem('date1')) || [];
-        date_1.push(first);
-        localStorage.setItem('date1', JSON.stringify(date_1));
-    }
-
-    if(secondDate.value) {
-        let date_2 = JSON.parse(localStorage.getItem('date2')) || [];
-        date_2.push(second);
-        localStorage.setItem('date2', JSON.stringify(date_2));
-    }
-
 }
 
+function setHistory(result) {
+    let resArray = JSON.parse(localStorage.getItem('resultsArray'));
 
-function setHistory(firstD, secondD, result) {
+    let listItems = document.getElementsByTagName('li');
+    if (listItems.length > 9) {
+        document.getElementsByTagName( "li" )[0].remove();
+        resArray.splice(0, 1);
+        localStorage.setItem('resultsArray', JSON.stringify(resArray)); 
+    };
 
-    //let first = new Date(document.querySelector('.data1-input').value).toISOString().slice(0,10);
-    //let second = new Date(document.querySelector('.data2-input').value).toISOString().slice(0,10);
-    //const result = getResult();
+    history.appendChild(list);
+    list.className = 'history-list';
+    const row = document.createElement('li');
+    row.appendChild(document.createTextNode(`Date 1: ${firstDate.value} Date 2: ${secondDate.value} Result: ${result}`));
+    list.appendChild(row);
 
-/*     let firstD = JSON.parse(localStorage.getItem('date1'));
-    let secondD = JSON.parse(localStorage.getItem('date2'));
-    let result = JSON.parse(localStorage.getItem('resultsArray')); */
-
-    let tableBody = table.firstElementChild;
-
-    let newBlock = document.createElement('tr');
-    tableBody.appendChild(newBlock);
-
-    let newData1 = document.createElement('td');
-    let newData2 = document.createElement('td');
-    let newResult = document.createElement('td');
-
-    newData1.className = 'date-1';
-    newData2.className = 'date-2';
-    newResult.className = 'result';
-    
-    newBlock.appendChild(newData1);
-    newBlock.appendChild(newData2);
-    newBlock.appendChild(newResult);
-
-    newData1.appendChild(document.createTextNode(firstD));
-    newData2.appendChild(document.createTextNode(secondD));
-    newResult.appendChild(document.createTextNode(result));
-
-}
-
-function removeHistory() {
-
-    let tableBody = table.firstElementChild;
-    const header = tableBody.firstElementChild;
-
-    let history = document.getElementsByTagName('tr');
-
-    if (history.length > 10) {
-        header.nextSibling.remove();
-    }
 }
 
 
 function setDefaultSettingsDate() {
     let today = new Date().toISOString().slice(0,10);
+    
     firstDate.setAttribute('value', today);
     secondDate.setAttribute('min', today);
 };

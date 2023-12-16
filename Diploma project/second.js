@@ -1,11 +1,10 @@
 'use strict';
 
-
-const date = document.querySelector('#date-input');
 const form = document.querySelector('.form');
-const list = document.querySelector('.cities');
+const selectCountry = document.getElementById('countrySelect');
+const selectYear = document.getElementById('yearSelect');
 const msg = document.querySelector('.msg');
-const input = document.querySelector('#input');
+const button = document.getElementById('btn');
 
 
 class CountryApp {
@@ -14,11 +13,8 @@ class CountryApp {
         this.isLoading = false;
     }
 
-
 fetchData = () => {
-    const country = document.querySelector('#input').value;
-    const year = document.querySelector('#date-input').valueAsNumber;
-    const url = `https://calendarific.com/api/v2/countries?api_key=${this.API_KEY}&country=${country}&year=${year}`;
+    const url = `https://calendarific.com/api/v2/countries?api_key=${this.API_KEY}`;
 
 
     fetch(url)
@@ -35,43 +31,116 @@ fetchData = () => {
         })
     }
 
+
     updateDOM = (data) => {
         const {response} = data;
-        let countries = response.countries;
-        console.log(countries);
+        let apiResponse = response.countries;
+        let selectCountry = document.getElementById('countrySelect');
 
-        for (let key in countries) {
-            console.log(document.querySelector('#input').value);
-            console.log(countries[key].country_name);
+        apiResponse.forEach((country) => {
+            let option = document.createElement('option');
+            option.classList.add(country['iso-3166']);
+            option.value = country.country_name;
+            option.text = country.country_name;
+            selectCountry.appendChild(option);
+        });
 
-            if(countries[key].country_name === document.querySelector('#input').value) {
-
-                console.log((countries[key].country_name) + 'is finded.');
-                }
-            else return;
+        let selectYear = document.getElementById('yearSelect');
+        const Years = () => {
+            const arr = [];
+            let year = 2001;
+            while (year <= 2049) {
+                arr.push(year)
+                year += 1;
+            }
+            arr.forEach((year) => {
+                let option = document.createElement('option');
+                option.value = year;
+                option.text = year;
+                selectYear.appendChild(option);
+            })
+            return arr;
         }
-
-        const li = document.createElement('li');
-        li.classList.add('city');
-
-        li.innerHTML = `<h2 class="city-name">${countries[key].country_name}</h2>`;
-
-        list.appendChild(li);
+        Years();
     }
-    
+
 }
+
+
+class Holidays {
+    constructor() {
+        this.API_KEY = 'cDTK74kV3W7CRktUossYtPFw8x4S9aJ9';
+        this.isLoading = false;
+    }
+
+     fetchHolidays = async (countryIso, selectedYear) => {
+        //API_KEY = 'cDTK74kV3W7CRktUossYtPFw8x4S9aJ9';
+            let iso = countryIso.className;
+            let year = selectedYear;
+            this.isLoading = false;
+        
+            let url = `https://calendarific.com/api/v2/holidays?api_key=cDTK74kV3W7CRktUossYtPFw8x4S9aJ9&country=${iso}&year=${year}`;
+        
+            return await fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+            })
+                .catch((error) => {
+                    throw new Error(error);
+                })
+                .finally(() => {
+                    this.isLoading = false;
+                })
+        }
+        getHolidays() {
+            let selectedCountry = selectCountry.value;
+            let selectedYear = selectYear.value;
+            this.isLoading = false;
+        
+            if (selectedCountry && selectedYear) {
+        
+                fetchHolidays(selectedCountry, selectedYear)
+                    .then(data => {
+                    console.log(data);
+                    })
+                    .catch((error) => {
+                    throw new Error(error);
+                    })
+                    .finally(() => {
+                    this.isLoading = false;
+                    })
+            }
+    }
+
+}
+
 
 (() => {
     const countryApp = new CountryApp();
-
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
+    document.addEventListener('DOMContentLoaded', () => {
+        selectYear.disabled = true;
         countryApp.fetchData();
-
-        //form.reset();
-        input.focus();
     })
-})()
+})();
+
+
+selectCountry.addEventListener('click' , () => {
+    if(selectCountry.selectedIndex !== 0){
+        selectYear.disabled = false;
+        }
+
+});
+
+button.addEventListener('click' , () => {
+    if(selectCountry.selectedIndex === 0){
+        selectYear.disabled = true;
+    }
+        else selectYear.disabled = false;
+
+        const holidays = new Holidays();
+        holidays.getHolidays();
+})  
 
 
 

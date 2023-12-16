@@ -10,15 +10,15 @@
     <section class="top-banner">
         <div class="date">
             <h1 class="heading">HolidaysApp</h1>
-            <h2>Country</h2>
             <div class="container">
                 <form class="form">
-                    <label for="input">Вибір країни
-                        <input type="text" id="input" placeholder="Search for a city" autofocus>
-                    </label>
-                        <button type="submit">SUBMIT</button><br>
-                    <label for="date-input">Вибір року</label>
-                        <input type="text" id="date-input" placeholder="Search for a year">
+                    <select id="countrySelect">
+                    <option value="">Оберіть країну</option>
+                    </select>
+                        <button type="submit" id="btn">SUBMIT</button><br>
+                        <select id="yearSelect">
+                            <option value="">Оберіть рік</option>
+                            </select>
                         <span class="msg"></span>
                 </form>
             </div>
