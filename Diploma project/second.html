@@ -4,30 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="index.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <title>Document</title>
 </head>
 <body>
     <section class="top-banner">
-        <div class="date">
-            <h1 class="heading">HolidaysApp</h1>
-            <div class="container">
-                <form class="form">
+            <h1 class="heading">Свята</h1>
+                    <label for="countrySelect">Вибір країни:</label>
                     <select id="countrySelect">
-                    <option value="">Оберіть країну</option>
+                        <option value="">Оберіть країну</option>
                     </select>
-                        <button type="submit" id="btn">SUBMIT</button><br>
-                        <select id="yearSelect">
-                            <option value="">Оберіть рік</option>
-                            </select>
-                        <span class="msg"></span>
-                </form>
-            </div>
-        </div>
+                    <label for="yearSelect">Вибір року:</label>
+                    <select id="yearSelect" disabled>
+                        <option value="">Оберіть рік</option>
+                    </select>
+                    <button id="fetchHolidays">Отримати свята</button><br>
+                    <div id="errorBlock" style="color: red;"></div>
     <section class="response-section">
-        <div class="container">
-          <ul class="cities"></ul>
-        </div>
-      </section>
-      <script src="second.js"></script>
+        <table id="holidaysTable">
+            <thead>
+                <tr>
+                  <th><i id="sortButton" class='fas fa-sort-alpha-down'></i> Дата</th>
+                  <th>Назва свята</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+        </table>
+        <span class="msg"></span>
+    </section>
+    <script src="second.js"></script>
 </body>
 </html>

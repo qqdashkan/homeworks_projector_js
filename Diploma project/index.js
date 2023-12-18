@@ -17,6 +17,8 @@ const radioSeconds = document.querySelector('.seconds');
 const history = document.querySelector('.history');
 const list = document.createElement('ol');
 
+const table = document.getElementById('table');
+
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -34,16 +36,22 @@ button.addEventListener('click', function () {
 
     storeResultInLocalStorage(result);
 
-    setHistory(result);
+    showHistory(result);
 
-    renderHistory();
 });
 
 function renderHistory() {
 
-    let historyList = document.getElementsByTagName('li');
-    console.log(historyList);
+    let array = JSON.parse(localStorage.getItem('history')) || [];
 
+    const tr = Array.from(table.getElementsByTagName('tr'));
+    console.log(Array.from(tr));
+
+    const tbody = table.querySelector('tbody');
+
+    tr.forEach(tr => {
+        tbody.appendChild(tr);
+    })
 
 }
 
@@ -55,24 +63,25 @@ function storeResultInLocalStorage(result) {
 
 }
 
-function setHistory(result) {
-    let resArray = JSON.parse(localStorage.getItem('resultsArray'));
+function showHistory(result) {
 
-    let listItems = document.getElementsByTagName('li');
-    if (listItems.length > 9) {
-        document.getElementsByTagName( "li" )[0].remove();
-        resArray.splice(0, 1);
-        localStorage.setItem('resultsArray', JSON.stringify(resArray)); 
-    };
+    const tbody = table.querySelector('tbody');
 
-    history.appendChild(list);
-    list.className = 'history-list';
-    const row = document.createElement('li');
-    row.appendChild(document.createTextNode(`Date 1: ${firstDate.value} Date 2: ${secondDate.value} Result: ${result}`));
-    list.appendChild(row);
+    const row = document.createElement('tr');
+    const dateOne = document.createElement('td');
+    dateOne.innerHTML = firstDate.value;
+    const dateTwo = document.createElement('td');
+    dateTwo.innerHTML = secondDate.value;
+    const res = document.createElement('td');
+    res.innerHTML = result;
+
+    row.appendChild(dateOne);
+    row.appendChild(dateTwo);
+    row.appendChild(res);
+    tbody.appendChild(row);
+
 
 }
-
 
 function setDefaultSettingsDate() {
     let today = new Date().toISOString().slice(0,10);
