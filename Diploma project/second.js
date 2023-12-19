@@ -5,7 +5,7 @@ const yearSelect = document.getElementById('yearSelect');
 const msg = document.querySelector('.msg');
 const button = document.getElementById('fetchHolidays');
 const holidaysTable = document.getElementById('holidaysTable');
-const sortBtn = document.getElementById('sortButton');
+const sortButton = document.getElementById('sortButton');
 const errorBlock = document.getElementById("errorBlock");
 
 
@@ -48,8 +48,6 @@ fetchData = () => {
         });
 
             (() => {
-
-
             let arr = [];
             let year = 2001;
             while (year <= 2049) {
@@ -70,104 +68,62 @@ fetchData = () => {
 class Holidays {
     constructor() {
         this.API_KEY = 'sbC9X3HW4YxcFs1WDFofMaKCJqu0ae0o';
-        this.isLoading = false;
+        this.sortTable = this.sortTable.bind(this);
     }
 
-fetchHolidays = (iso) => {
-
+            fetchHolidays = (iso) => {
             const country = selectCountry.value;
             const year = yearSelect.value;
             const countryIso = iso;
-        
             const holidaysUrl = `https://calendarific.com/api/v2/holidays?api_key=${this.API_KEY}&country=${countryIso}&year=${year}`;
 
             if(country && year) {
-                let promise = fetch(holidaysUrl)
-                    promise.then(response => response.json())
-                        .then((holidays) => {
-                            errorBlock.innerHTML = "";
-                            this.updateTable(holidays);
-                            })
-                        .catch((error) => {
-                            errorBlock.textContent = `Error fetching holidays: ${error.message}`;
-                        });
-
-/*             if(promise) {
-                let promiseSort = fetch(holidaysUrl)
-                    promiseSort.then(response => response.json())
-                        .then((holidays) => {
-                            console.log(holidays);
-                           
-                        })
-                        .catch((error) => {
-                            errorBlock.textContent = `Error sort holidays: ${error.message}`;
-                        })
-                } */
+                fetch(holidaysUrl)
+                    .then(response => response.json())
+                    .then((holidays) => {
+                        errorBlock.innerHTML = "";
+                        this.renderTable(holidays);
+                    })
+                    .catch((error) => {
+                        errorBlock.innerHTML = `Error fetching holidays: ${error.message}`;
+                    })
             }
-        }
+        };
 
-
-
-    updateTable = (holidays) => {
-    
-    console.log(holidays);
+renderTable = (holidays) => {
     const {response} = holidays;
     let apiResponse = response.holidays;
 
-    if(holidaysTable.hasAttribute('data-rendered')) {
-        let ar = Array.from(apiResponse);
-        let newArr = ar.reverse();
-        console.log(newArr);
-        render(ar);
-    } else render(apiResponse);
-
-
-    function render (apiResponse) {
-    holidaysTable.toggleAttribute('data-rendered');
     const tbody = holidaysTable.querySelector('tbody');
     tbody.innerHTML = '';
     
-       apiResponse.forEach(holiday => {
-            const row = document.createElement('tr');
-            const dateCell = document.createElement('td');
-            dateCell.textContent = holiday.date.iso;
-            const nameCell = document.createElement('td');
-            nameCell.textContent = holiday.name;
+    apiResponse.forEach(holiday => {
+        const row = document.createElement('tr');
+        const dateCell = document.createElement('td');
+        dateCell.textContent = holiday.date.iso;
+        const nameCell = document.createElement('td');
+        nameCell.textContent = holiday.name;
             
-            row.appendChild(dateCell);
-            row.appendChild(nameCell);
-            tbody.appendChild(row);
-        });
-
-    }
+        row.appendChild(dateCell);
+        row.appendChild(nameCell);
+        tbody.appendChild(row);
+    });
 };
-/* 
-    sortTable = (holidays) => {
-        console.log(holidays.response);
-        const {response} = holidays;
-        let apiResponse = response.holidays;
-        let ar = Array.from(apiResponse);
-        console.log(ar.reverse());
 
-            const tbody = holidaysTable.querySelector("tbody");
-            tbody.innerHTML = "";
+sortTable = () => {
+    const tbody = holidaysTable.querySelector('tbody');
+    const list = tbody.getElementsByTagName('tr');
+    let arr = Array.from(list);
+    let apiResponse = arr.reverse();
+    tbody.innerHTML = '';
+    
+    apiResponse.forEach(holiday => {
+    tbody.appendChild(holiday);
+    });
+};
 
-        ar.forEach(holiday => {
-            const row = document.createElement("tr");
-            const dateCell = document.createElement("td");
-            dateCell.textContent = holiday.date.iso;
-            const nameCell = document.createElement("td");
-            nameCell.textContent = holiday.name;
-            
-            row.appendChild(dateCell);
-            row.appendChild(nameCell);
-            tbody.appendChild(row);
-        });
-    }; */
-        
 }
-
-
+        
 (() => {
     const holidays = new Holidays();
 
@@ -180,8 +136,6 @@ fetchHolidays = (iso) => {
         }
         const iso = getISO();
         holidays.fetchHolidays(iso);
-
-
     })
 })();
 
@@ -194,7 +148,6 @@ fetchHolidays = (iso) => {
 
     })
 })();
-
 
 
 selectCountry.addEventListener('change' , function () {
@@ -212,10 +165,10 @@ selectCountry.addEventListener('change' , function () {
 });
 
 (() => {
-    const sort = new Holidays();
-    sortBtn.addEventListener('click', function () {
-        sort.fetchHolidays();
-    });
+    const sortList = new Holidays();
+    sortButton.addEventListener('click', function(){
+    sortList.sortTable();
+})
 })();
 
 

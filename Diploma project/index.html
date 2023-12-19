@@ -7,29 +7,25 @@
     <title>Document</title>
 </head>
 <body>
+
     <div class="container">
+      <a href="second.html">Пошук святкових днів</a>
     <div class="first">
-        <h2>First date</h2>
+        <h2>Калькулятор днів</h2>
       </div>
       <div class="firstDate">
       
       <form>
         <div class="first">
-          <label for="firstDate">Початкова дата </label>
-          <input type="date" name="firstdate" class="data1-input"/>
+          <label for="firstDate">Початковий день</label>
+          <input type="date" id="firstDate" class="data1-input"/>
           </div>
       </form>
-      </div>
-      
-      <div class="container">
-      <div class="second">
-        <h2>Second date</h2>
-      </div>
-      
+      </div>   
       <form>
         <div class="second">
-        <label for="secondDate">Кінцева дата: </label>
-        <input type="date" name="seconddate" class="data2-input"/>
+        <label for="secondDate">Кінцевий день:</label>
+        <input type="date" id="secondDate" class="data2-input"/>
       </form>
       </div>
     </div>
@@ -100,7 +96,7 @@
 </div>
 
 <div class="button">
-    <button type="submit" class="btn">Get result</button><br>
+    <button type="submit" class="btn">Отримати результат</button><br>
     <span id="result"></span>
 </div>
 <table id="table">

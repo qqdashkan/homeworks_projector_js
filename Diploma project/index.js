@@ -14,73 +14,54 @@ const radioHours = document.querySelector('.hours');
 const radioMinutes = document.querySelector('.minutes');
 const radioSeconds = document.querySelector('.seconds');
 
-const history = document.querySelector('.history');
-const list = document.createElement('ol');
-
 const table = document.getElementById('table');
-
 
 document.addEventListener('DOMContentLoaded', function () {
 
     setDefaultSettingsDate();
 
-    renderHistory();
-
+    let array = JSON.parse(localStorage.getItem('resultsArray')) || [];
+    if (array.length) {
+        array.forEach((item) => {
+            showHistory(item);
+        })
+    }
 });
-
 
 button.addEventListener('click', function () {
 
     const result = getResult();
-    document.getElementById("result").innerHTML = result;
-
     storeResultInLocalStorage(result);
-
     showHistory(result);
-
 });
-
-function renderHistory() {
-
-    let array = JSON.parse(localStorage.getItem('history')) || [];
-
-    const tr = Array.from(table.getElementsByTagName('tr'));
-    console.log(Array.from(tr));
-
-    const tbody = table.querySelector('tbody');
-
-    tr.forEach(tr => {
-        tbody.appendChild(tr);
-    })
-
-}
 
 function storeResultInLocalStorage(result) {
 
-    let resArray = JSON.parse(localStorage.getItem('resultsArray')) || [];
-    resArray.push(JSON.parse(result));
-    localStorage.setItem('resultsArray', JSON.stringify(resArray));
-
+        let resArray = JSON.parse(localStorage.getItem('resultsArray')) || [];
+        resArray.push(result);
+        if (resArray.length > 10) {
+            document.getElementsByTagName( "tr" )[1].remove();
+            resArray.splice(0, 1);
+            localStorage.setItem('resultsArray', JSON.stringify(resArray));
+        } else localStorage.setItem('resultsArray', JSON.stringify(resArray));
 }
 
 function showHistory(result) {
 
-    const tbody = table.querySelector('tbody');
-
-    const row = document.createElement('tr');
-    const dateOne = document.createElement('td');
-    dateOne.innerHTML = firstDate.value;
-    const dateTwo = document.createElement('td');
-    dateTwo.innerHTML = secondDate.value;
-    const res = document.createElement('td');
-    res.innerHTML = result;
-
-    row.appendChild(dateOne);
-    row.appendChild(dateTwo);
-    row.appendChild(res);
-    tbody.appendChild(row);
-
-
+        document.getElementById("result").innerHTML = result.result;
+        const tbody = table.querySelector('tbody');
+        const row = document.createElement('tr');
+        const dateOne = document.createElement('td');
+        dateOne.innerHTML = new Date(result.first).toISOString().slice(0,10);
+        const dateTwo = document.createElement('td');
+        dateTwo.innerHTML = new Date(result.second).toISOString().slice(0,10);
+        const res = document.createElement('td');
+        res.innerHTML = result.result;
+    
+        row.appendChild(dateOne);
+        row.appendChild(dateTwo);
+        row.appendChild(res);
+        tbody.appendChild(row);
 }
 
 function setDefaultSettingsDate() {
@@ -88,6 +69,9 @@ function setDefaultSettingsDate() {
     
     firstDate.setAttribute('value', today);
     secondDate.setAttribute('min', today);
+
+    radioAllDays.checked = true;
+    radioDays.checked = true;
 };
 
 firstDate.addEventListener('input', function () {
@@ -126,7 +110,12 @@ function getAllDays() {
         let nextDay = new Date(day.setDate(day.getDate() + 1));
         daysArray.push(nextDay);
         }
-        return daysArray.length;
+
+        return {
+            first,
+            second,
+            result: daysArray.length,
+        };
     }
 };
 
@@ -144,11 +133,16 @@ function getOnlyDaysOn() {
 
         daysArray.forEach((day) => {
             if (day.getDay() !== 6 && day.getDay() !== 0) {
-                daysOnArray.push(day); 
+            daysOnArray.push(day); 
             }
         });
-        return daysOnArray.length;
-    }    
+
+        return {
+            first: first,
+            second: second,
+            result: daysOnArray.length,
+        };
+}    
 
 function getOnlyDaysOff() {
     if (radioDaysOff.checked) {
@@ -165,68 +159,79 @@ function getOnlyDaysOff() {
 
         daysArray.forEach((day) => {
             if (day.getDay() === 0 || day.getDay() === 6) {
-                daysOffArray.push(day); 
+            daysOffArray.push(day); 
             }
         });
-        return daysOffArray.length;
+        
+        return {
+            first,
+            second,
+            result: daysOffArray.length,
+        };
     }
 };
 
 function getResult() {
     if(radioDays.checked) {
         if(radioAllDays.checked) {
-            const days = getAllDays();
-            return days;
+            return getAllDays();
         }
         if(radioDaysOn.checked) {
-            const days = getOnlyDaysOn();
-            return days;
-            }
+            return getOnlyDaysOn();
+        }
         if(radioDaysOff.checked) {
-            const days = getOnlyDaysOff();
-            return days;
-            }
+            return getOnlyDaysOff();
+        }
     }
     if (radioHours.checked) {
         if(radioAllDays.checked) {
             const days = getAllDays();
-            return days * 24;
+            days.result = days.result * 24;
+            return days;
             }
         if (radioDaysOn.checked) {
             const days = getOnlyDaysOn();
-            return days * 24;
+            days.result = days.result * 24;
+            return days;
             }
         if (radioDaysOff.checked) {
             const days = getOnlyDaysOff();
-            return days * 24;
+            days.result = days.result * 24;
+            return days;
             }
     }
     if (radioMinutes.checked) {
         if(radioAllDays.checked) {
             const days = getAllDays();
-            return days * 24 * 60;
+            days.result = days.result * 24 * 60;
+            return days;
             }
         if (radioDaysOn.checked) {
             const days = getOnlyDaysOn();
-            return days * 24 * 60;
+            days.result = days.result * 24 * 60;
+            return days;
             }
         if (radioDaysOff.checked) {
             const days = getOnlyDaysOff();
-            return days * 24 * 60;
+            days.result = days.result * 24 * 60;
+            return days;
             }
     }
     if (radioSeconds.checked) {
         if(radioAllDays.checked) {
             const days = getAllDays();
-            return days * 24 * 60 * 60;
+            days.result = days.result * 24 * 60 * 60;
+            return days;
             }
         if (radioDaysOn.checked) {
             const days = getOnlyDaysOn();
-            return days * 24 * 60 * 60;
+            days.result = days.result * 24 * 60 * 60;
+            return days;
             }
         if (radioDaysOff.checked) {
             const days = getOnlyDaysOff();
-            return days * 24 * 60 * 60;
+            days.result = days.result * 24 * 60 * 60;
+            return days;
             }
     }
 
